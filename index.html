@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <title>Net Pay Calculator</title>
+</head>
+
+<body>
+    <h1>NET PAY CALCULATOR</h1>
+    <h2>Enter the gross salary below to calculate your net amount</h2>
+
+    <div class="input-group flex-nowrap">
+        <span class="input-group-text" id="addon-wrapping">ksh</span>
+        <input type="text" class="form-control" placeholder="grosssalary" aria-label="Recipient's username"
+            aria-describedby="button-addon2" id="grosssalary">
+        <button onclick=addTOtable() class="btn btn-outline-secondary" type="button"
+            id="button-addon2">Calculate</button>
+    </div>
+
+    <table class="table">
+        <tr>
+            <th scope="col1">Description</th>
+            <th scope="col1">Results</th>
+        </tr>
+        <tr>
+            <td>basic salary</td>
+            <td id="gross"></td>
+        </tr>
+        <tr>
+            <td>NSSF tier 1</td>
+            <td>360</td>
+        </tr>
+        <tr>
+            <td>NSSF tier 2</td>
+            <td>720</td>
+        </tr>
+        <tr>
+            <td>FinalPAYE</td>
+            <td id="payee"></td>
+        </tr>
+        <tr>
+            <td>NHIF</td>
+            <td id="nhif"></td>
+        </tr>
+        <tr>
+            <td>NetPay</td>
+            <td id="netpay"></td>
+        </tr>
+
+
+
+    </table>
+    <!-- Optional JavaScript; choose one of the two! -->
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+
+    <script>
+        function addTOtable() {
+            var grosssalary = document.getElementById("grosssalary").value;
+            var nhif_value = nhif_func(grosssalary);
+            var Payee_value = payee_func(grosssalary);
+            var netpay_value = netpay_func(grosssalary);
+
+
+            document.getElementById("gross").innerHTML = grosssalary
+            document.getElementById("nhif").innerHTML = NHIF
+            document.getElementById("payee").innerHTML = FinalPAYE
+            document.getElementById("netpay").innerHTML = NetPay
+
+        }
+
+        function nhif_func(e) {
+            grosssalary = e;
+
+
+            if (grosssalary >= 100000) {
+                NHIF = 1700
+            }
+            else if (grosssalary >= 90000 && grosssalary < 99999) {
+                NHIF = 1600
+            }
+            else if (grosssalary >= 80000 && grosssalary < 89999) {
+                NHIF = 1500
+            }
+
+            else if (grosssalary >= 70000 && grosssalary < 79999) {
+                NHIF = 1400
+            }
+
+            else if (grosssalary >= 60000 && grosssalary < 69999) {
+                NHIF = 1300
+            }
+
+            else if (grosssalary >= 50000 && grosssalary < 59999) {
+                NHIF = 1200
+            }
+
+            else if (grosssalary >= 45000 && grosssalary < 49999) {
+                NHIF = 1100
+            }
+
+            else if (grosssalary >= 40000 && grosssalary < 44999) {
+                NHIF = 1000
+            }
+
+            else if (grosssalary >= 35000 && grosssalary < 39000) {
+                NHIF = 950
+            }
+
+            else if (grosssalary >= 30000 && grosssalary < 34999) {
+                NHIF = 900
+            }
+
+            else if (grosssalary >= 25000 && grosssalary < 29999) {
+                NHIF = 850
+            }
+
+            else if (grosssalary >= 20000 && grosssalary < 24999) {
+                NHIF = 750
+            }
+
+            else if (grosssalary >= 15000 && grosssalary < 19999) {
+                NHIF = 600
+            }
+
+            else if (grosssalary >= 12000 && grosssalary < 14999) {
+                NHIF = 500
+            }
+
+            else if (grosssalary >= 8000 && grosssalary < 11999) {
+                NHIF = 400
+            }
+
+            else if (grosssalary >= 6000 && grosssalary < 7999) {
+                NHIF = 300
+            }
+
+            else {
+                NHIF = 150
+            }
+
+            return NHIF
+
+        }
+        function payee_func(e) {
+            let grosssalary, w, x, y
+            grosssalary = e
+            w = (e - 1080);
+            x = ((2400 + 2083.25) + (0.3 * (w - 32333)) - (2400));
+            y = ((2400) + 0.25 * (w - 24000) - (2400));
+
+
+            if (w >= 32334) {
+                FinalPAYE = x
+            }
+            else if (w > 24001 && w < 32333) {
+                FinalPAYE = y
+            }
+            else {
+                FinalPAYE = 0
+            }
+            return FinalPAYE
+        }
+        function netpay_func(e) {
+            NetPay = (grosssalary - FinalPAYE - NHIF)
+            return NetPay
+        }
+
+    </script>
+
+</body>
+
+</html>
